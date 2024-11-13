@@ -8,8 +8,8 @@ class User < ApplicationRecord
     length: { maximum: 255 }, 
     format: { with: VALID_EMAIL_REGEX }, 
     uniqueness: true
-  has_secure_password
-  validates :password, presence: true, length: { minimum: 6 } 
+  has_secure_password #not allow nil
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   class << self  
   # def User.digest(...1
@@ -32,7 +32,7 @@ class User < ApplicationRecord
     remember_digest
   end
 
-  def session_token
+  def session_token #for security 'session heigh jack'
     remember_digest || remember
   end
 

@@ -6,7 +6,7 @@ module SessionsHelper
   end
 
   def remember(user)
-    user.remember #defin at models/users.rb
+    user.remember #define at models/users.rb
     cookies.permanent.encrypted[:user_id] = user.id
     cookies.permanent[:remember_token] = user.remember_token
   end
@@ -20,7 +20,7 @@ module SessionsHelper
   def current_user
     if (user_id = session[:user_id])
       user = User.find_by(id: user_id)
-      if user && session[:session_token] == user.remember_digest #Q
+      if user && session[:session_token] == user.session_token #Q
         @current_user = user
       end
     elsif (user_id = cookies.encrypted[:user_id])
@@ -32,8 +32,11 @@ module SessionsHelper
     end
   end
 
+  def current_user?(user)
+    user && user == current_user
+  end
+
   def logged_in?
-    # !current_user.nil?
     current_user.present?
   end
 
@@ -41,5 +44,9 @@ module SessionsHelper
     forget(current_user)
     reset_session
     @current_user = nil
+  end
+
+  def store_location #for friendly forwarding
+    session[:forwarding_url] = request.original_url if request.get?
   end
 end
