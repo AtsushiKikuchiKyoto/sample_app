@@ -1,0 +1,5 @@
+<%= link_to gravatar_for(current_user, size: 50), current_user %>
+<h1><%= current_user.name %></h1>
+<span><%= link_to "view my profile", current_user %></span>
+<span><%= pluralize(current_user.microposts.count, "micropost") %></span>
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d624.0922212046308!2d135.74541511475533!3d35.261294344471395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6001b70017de29d1%3A0x7a2e88be0642c777!2z5LuP6LC356ys5LiJ5qmLW-iPheWOn10!5e0!3m2!1sja!2sjp!4v1731651071253!5m2!1sja!2sjp" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
