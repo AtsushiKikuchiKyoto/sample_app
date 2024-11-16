@@ -1,8 +1,10 @@
 class User < ApplicationRecord
   has_many :microposts, dependent: :destroy
   has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
-  
-  attr_accessor :remember_token, :activation_token, :reset_token #DBに入れない 
+  has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many :following, through: :active_relationships, source: :followed
+  has_many :followers, through: :passive_relationships, source: :follower
+  attr_accessor :remember_token, :activation_token, :reset_token #not into DB
   before_save :downcase_email
   before_create :create_activation_digest
   validates :name, presence: true, length: { maximum: 50 }
@@ -77,6 +79,18 @@ class User < ApplicationRecord
 
   def feed
     Micropost.where("user_id = ?", id)
+  end
+
+  def follow(other_user)
+    following << other_user unless self == other_user
+  end
+
+  def unfollow(other_user)
+    following.delete(other_user) #ruby array
+  end
+
+  def following?(other_user)
+    following.include?(other_user)
   end
 
   private
