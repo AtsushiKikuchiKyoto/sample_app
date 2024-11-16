@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get "/logout",  to: "sessions#destroy"
   delete "/logout",  to: "sessions#destroy"
   resources :users do
-    member do
+    member do #need user_id
       get :following, :followers
     end
   end

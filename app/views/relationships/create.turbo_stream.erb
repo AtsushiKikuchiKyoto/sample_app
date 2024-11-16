@@ -1,0 +1,9 @@
+<%# update view CSSid "follow_form" %>
+<%= turbo_stream.update "follow_form" do %>
+  <%= render partial: "users/unfollow" %>
+  <%# <p>turbo check!</p> %>
+<% end %>
+<%= turbo_stream.update "followers" do %>
+  <%= @user.followers.count %>
+  <%# <p>turbo check!</p> %>
+<% end %>
